@@ -5,5 +5,4 @@ FROM base
 WORKDIR /app
 COPY requirements.txt .
 RUN pip install -r requirements.txt
-COPY XGBoost.sav /app
 COPY ./app /app
