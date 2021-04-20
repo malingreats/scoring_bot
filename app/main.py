@@ -16,7 +16,7 @@ api = Flask(__name__)
 
 @api.route("/")
 def hello():
-    return "Hello Financial Paradise
+    return "Hello Financial Paradise"
 
 
 
