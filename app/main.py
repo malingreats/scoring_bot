@@ -20,7 +20,7 @@ def hello():
 
 
 
-@app.route("/prediction", methods=["POST"])
+@api.route("/prediction", methods=["POST"])
 def get_prediction():
     request_json     = request.get_json()
     value1           = request_json.get('Final branch')
