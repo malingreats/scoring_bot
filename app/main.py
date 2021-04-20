@@ -46,6 +46,8 @@ def predict(loan_data):
 
 def pre_process(loan_data):
     loan_data = pd.DataFrame(loan_data, index=[0])
+    print('loan_data', loan_data)
+
     variables  = ['Final branch', 'Sales Details', 'Gender Revised', 'Marital Status', 'HOUSE', 'Loan Type', 'Fund',
                 'Loan Purpose', 'Client Type','Client Classification', 'Currency', 'target', 'Highest Sales','Lowest Sales',
                 'Age', 'principal_amount']
@@ -53,6 +55,8 @@ def pre_process(loan_data):
 
     # Subset the data
     app_train = loan_data.loc[:, variables]
+    print('app_train', app_train)
+    
 
 
     # Replace the N/a class with class 'missing'
@@ -69,27 +73,34 @@ def pre_process(loan_data):
     numerics = ['int16','int32','int64','float16','float32','float64']
     numerical_vars = list(app_train.select_dtypes(include=numerics).columns)
     numerical_data = app_train[numerical_vars]
+    print('numerical_data', numerical_data)
 
     # Fill in missing values
     numerical_data = numerical_data.fillna(numerical_data.mean())
+    print('numerical_data', numerical_data)
 
     # Subset categorical data
     cates = ['object']
-    cate_vars = list(app_data.select_dtypes(include=cates).columns)
-    categorical_data = app_data[cate_vars]
+    cate_vars = list(app_train.select_dtypes(include=cates).columns)
+    categorical_data = app_train[cate_vars]
     categorical_data = categorical_data.astype(str)
     categorical_data.shape
+    print('categorical_data.shape', categorical_data.shape)
 
     # Instantiate label encoder
     le = preprocessing.LabelEncoder()
     categorical_data = categorical_data.apply(lambda col: le.fit_transform(col).astype(str))
+    print('categorical_data', categorical_data)
 
     # Concat the data
     clean_data = pd.concat([categorical_data, numerical_data], axis = 1)
     clean_data.shape
+    print('clean_data.shape', clean_data.shape)
+
 
     # Prepare test data for individual predictions
     test_data = clean_data.drop(['target'], axis = 1)
+    print('test_data', test_data)
 
     return test_data
 
