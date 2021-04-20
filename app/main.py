@@ -37,7 +37,7 @@ def compute_prediction(request_json):
     return prediction
 
 def predict(loan_data):
-    model_two = 'XGBoost.sav'
+    model_two = '/app/XGBoost.sav'
     model = pickle.load(open(model_two, 'rb'))
     client_infor = loan_data.values   #Subset a specific client infor, *a* represent SK_ID_CURR
     prob = model.predict_proba(client_infor).tolist()[0]    #predict a client's probability of defaulting
