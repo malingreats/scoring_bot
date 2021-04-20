@@ -202,10 +202,6 @@ statsmodels==0.10.1
 sympy==1.4
 tables==3.5.2
 tblib==1.4.0
-tensorboard==1.13.1
-tensorboard-plugin-wit==1.6.0.post3
-tensorflow==1.15.0
-tensorflow-estimator==1.13.0
 termcolor==1.1.0
 terminado==0.8.2
 testpath==0.4.2
