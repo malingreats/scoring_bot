@@ -1,44 +1,13 @@
-# Miscellineous
-import os
-from datetime import datetime
-from flask import Flask,request, url_for, redirect, render_template, jsonify
-import requests
-
-# Package Imports
-import pickle
 import pandas as pd
 import numpy as np
-from sklearn import preprocessing
+from sklearn.preprocessing import LabelEncoder, OneHotEncoder
+import requests
+import json
+import pickle
+import os
 
+os.getcwd()
 
-
-api = Flask(__name__)
-
-@api.route("/")
-def hello():
-    return "Hello Financial Paradise"
-
-
-
-@api.route("/prediction", methods=["POST"])
-def get_prediction():
-    request_json     = request.get_json()
-    value1           = request_json.get('Final branch')
-    value2           = request_json.get('principal_amount')
-    response_content = value1
-    if value1 is not None and value2 is not None:
-        prediction = compute_prediction(request_json)
-    return jsonify(prediction)
-
-
-def predict(loan_data):
-    model_two = '/app/XGBoost.sav'
-    
-    model = pickle.load(open(model_two, 'rb'))
-    client_infor = loan_data.values   #Subset a specific client infor, *a* represent SK_ID_CURR
-    prob = model.predict_proba(client_infor).tolist()[0]    #predict a client's probability of defaulting
-    p = prob[1]
-    return p
 
 def compute_prediction(request):
     try:
@@ -56,7 +25,7 @@ def risk_assessor(data, a):
     client_infor = data.loc[[a]].values   #Subset a specific client infor, *a* represent SK_ID_CURR
     print('client_infor', client_infor)
     #Loading the Model
-    model_two = '/app/XGBoost.sav'
+    model_two = 'app/XGBoost.sav'
     model = pickle.load(open(model_two, 'rb'))
     prob = model.predict_proba(client_infor).tolist()[0]    #predict a client's probability of defaulting
     p = prob[1]
@@ -137,4 +106,3 @@ def preprocessing(request):
     test_data = clean_data.drop(['target'], axis = 1)
     return test_data
 
-    app.run(host='0.0.0.0', debug = True)
