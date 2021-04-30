@@ -48,7 +48,7 @@ def risk_assessor(data, a):
     client_infor = data.loc[[a]].values   #Subset a specific client infor, *a* represent SK_ID_CURR
     print('client_infor', client_infor)
     #Loading the Model
-    model_two = 'XGBoost.sav'
+    model_two = '/app/XGBoost.sav'
     model = pickle.load(open(model_two, 'rb'))
     prob = model.predict_proba(client_infor).tolist()[0]    #predict a client's probability of defaulting
     p = prob[1]
